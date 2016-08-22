@@ -1,5 +1,4 @@
 #![no_std]
-//#![feature(step_by)]
 #![feature(asm)]
 
 pub mod bench;

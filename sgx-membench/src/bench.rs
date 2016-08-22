@@ -3,34 +3,6 @@ use core::num::Wrapping;
 
 const TOTAL_MEM_ACCESSED: usize = 256 * 1024 * 1024;
 
-/*
-fn rand_asm() -> u64 {
-	let ret;
-	let mut retry=10;
-	unsafe{asm!("
-1:
-		rdrand $0
-		jc 2f
-		dec $1
-		jnz 1b
-2:
-	":"=r"(ret),"=r"(retry):"1"(retry)::"volatile")};
-	if retry==0 { panic!("RDRAND failure") }
-	ret
-}
-*/
-
-/*
-pub fn mem_access_seq_stepby(a: &[u8], step: usize) -> u64 {
-	let mut sum : u64 = 0;
-	
-	for i in (0..a.len()).step_by(step) {
-		sum = sum.wrapping_add(a[i] as u64); // disable overflow checking		
-	}
-	sum	
-}
-*/
-
 pub fn mem_access_seq(a: &[u8], step: usize) -> u32 {
 	let mut sum: u32 = 0;
 	let mut i = 0usize;
@@ -41,6 +13,8 @@ pub fn mem_access_seq(a: &[u8], step: usize) -> u32 {
 	}
 	sum	
 }
+
+/* Inlined from the Rust Rand implementation */
 
 #[allow(missing_copy_implementations)]
 #[derive(Clone)]
@@ -89,39 +63,3 @@ pub fn mem_access_rand(a: &[u8]) -> u32 {
 	}
 	sum
 }
-
-/*
-pub fn mem_access_rand_crc(a: &[u8]) -> u64 {
-	const CRC_SEED: u32 = 42;
-	
-	let mut sum: u64 = 0;
-
-	let mut accessed_size = 0;
-	let size = a.len() as u32;
-	let mut crc = 1u32;
-	
-	while accessed_size < size {
-		crc = crc32(CRC_SEED, crc);
-		let i = (crc % size) as usize; 
-		sum = sum.wrapping_add(a[i] as u64);
-		accessed_size += 1;
-	}
-	sum
-}
-*/
-
-/*
-pub fn mem_access_rand_asm(a: &[u8]) -> u64 {
-	let mut sum: u64 = 0;
-
-	let mut accessed_size = 0;
-	let size = a.len() as u64;
-	
-	while accessed_size < size {
-		let i = (rand_asm() % size) as usize; 
-		sum = sum.wrapping_add(a[i] as u64);
-		accessed_size += 1;
-	}
-	sum
-}
-*/

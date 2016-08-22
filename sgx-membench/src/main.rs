@@ -45,8 +45,8 @@ macro_rules! measure_avg {
 fn init_enclave<'a> (dev : &'a sgxs::isgx::Device) -> (sgxs::isgx::Mapping<'a>, std::result::Result<enclave_interface::debug::InstalledSignalHandler, std::io::Error>) {
     let (mut file, sig, mut le_file, le_sig) = (File::open(format!("../sgx-membench-enclave/target/{}/sgx_membench_enclave.sgxs", BUILT)).unwrap(),
                                         format!("../sgx-membench-enclave/target/{}/sgx_membench_enclave.sig", BUILT),
-                                        File::open("../rust-sgx/enclave_init/le.sgxs").unwrap(),
-                                        "../rust-sgx/enclave_init/le_prod_css.bin");
+                                        File::open("../../rust-sgx/enclave_init/le.sgxs").unwrap(),
+                                        "../../rust-sgx/enclave_init/le_prod_css.bin");
     
     let mut sig_file = File::open(sig).unwrap();
     let sig = enclave_interface::util::read_sigstruct(&mut sig_file).unwrap();    

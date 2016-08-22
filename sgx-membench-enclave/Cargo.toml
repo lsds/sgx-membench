@@ -7,11 +7,10 @@ authors = ["Peter Pietzuch <prp@imperial.ac.uk>"]
 crate-type = ["dylib"]
 
 [features]
-#enclave_debug = ["enclave/debug"]
+enclave_debug = ["enclave/debug"]
 
 [dependencies]
 sgx-isa = "0.1.0"
-enclave = {version = "=0.1.3", features = ["allocator"] } # was: debug
-#rustls = { git = "https://github.com/ctz/rustls.git" }
+enclave = {version = "=0.1.3", features = ["allocator", "debug"] } # was: debug
 sgx-membench = { path = "../sgx-membench/" }
 core_io = { version = "0.1", features = ["alloc","collections"] }
