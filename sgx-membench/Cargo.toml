@@ -1,0 +1,15 @@
+[package]
+name = "sgx-membench"
+version = "0.1.0"
+authors = ["Peter Pietzuch <prp@imperial.ac.uk>"]
+
+[features]
+
+[dependencies]
+x86 = "0.8.0"
+sgxs = "0.5.0"
+sgx-isa = "0.1.0"
+enclave-interface = "0.1.1"
+number_prefix = "0.2.5"
+
+#rustls = { git = "https://github.com/ctz/rustls.git" }
