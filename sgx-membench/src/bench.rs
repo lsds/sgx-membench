@@ -4,14 +4,14 @@ use core::num::Wrapping;
 const TOTAL_MEM_ACCESSED: usize = 256 * 1024 * 1024;
 
 pub fn mem_access_seq(a: &[u8], step: usize) -> u32 {
-	let mut sum: u32 = 0;
-	let mut i = 0usize;
-	let size = a.len();
-	while i < TOTAL_MEM_ACCESSED {
-		sum = sum.wrapping_add(a[i % size] as u32); // disable overflow checking
-		i += step;
-	}
-	sum	
+    let mut sum: u32 = 0;
+    let mut i = 0usize;
+    let size = a.len();
+    while i < TOTAL_MEM_ACCESSED {
+        sum = sum.wrapping_add(a[i % size] as u32); // disable overflow checking
+        i += step;
+    }
+    sum 
 }
 
 /* Inlined from the Rust Rand implementation */
@@ -37,8 +37,8 @@ impl XorShift {
     
     #[inline]
     fn next(&mut self) -> u32 {
-	    let x = self.x;
-	    let t = x ^ (x << 11);
+        let x = self.x;
+        let t = x ^ (x << 11);
         self.x = self.y;
         self.y = self.z;
         self.z = self.w;
@@ -49,17 +49,17 @@ impl XorShift {
 }
 
 pub fn mem_access_rand(a: &[u8]) -> u32 {
-	let mut sum: u32 = 0;
+    let mut sum: u32 = 0;
 
-	let mut accessed_size = 0usize;
-	let size = a.len() as u32;
-	
-	let mut rng = XorShift::new();
-	
-	while accessed_size < TOTAL_MEM_ACCESSED {
-		let i = (rng.next() % size) as usize; 
-		sum = sum.wrapping_add(a[i] as u32);
-		accessed_size += 1;
-	}
-	sum
+    let mut accessed_size = 0usize;
+    let size = a.len() as u32;
+    
+    let mut rng = XorShift::new();
+    
+    while accessed_size < TOTAL_MEM_ACCESSED {
+        let i = (rng.next() % size) as usize; 
+        sum = sum.wrapping_add(a[i] as u32);
+        accessed_size += 1;
+    }
+    sum
 }
